@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet, FlatList, Dimensions, Image } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Dimensions, Image, ScrollView } from 'react-native';
 import CreateMenu from './CreateMenu'; // Seu componente de menu
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ContentCard from './ContentCard';
 
 // Definindo a interface para os itens do menu
 interface MenuItem {
@@ -35,7 +36,7 @@ const Dashboard: React.FC = () => {
         <Image source={require('../assets/logo.png')} style={{ marginTop: 20 }} />
       </View>
 
-      <View style={{ marginTop: 20 }}>
+      <View style={{ marginTop: 20, width: '100%' }}>
         {/* Carrossel utilizando FlatList */}
         <FlatList
           data={menuItems} // Passando os itens do menu
@@ -47,6 +48,11 @@ const Dashboard: React.FC = () => {
           snapToAlignment="center" // Alinha os itens ao centro quando a rolagem parar
         />
       </View>
+
+      {/* Substituindo ScrollViewComponent por ScrollView */}
+      <ScrollView style={{ marginTop: 20, width: '100%' }}>
+        <ContentCard />
+      </ScrollView>
     </View>
   );
 };

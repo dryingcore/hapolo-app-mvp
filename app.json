@@ -1,28 +1,29 @@
 {
   "expo": {
-    "name": "hapolo-app",
-    "slug": "hapolo-app",
+    "name": "Hapolo Renowed",
+    "slug": "hapolo-renowed",
+    "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "icon": "./assets/logo.png",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
+      "package": "com.seuapp.nome",
+      "versionCode": 1,
+      "icon": "./assets/logo.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "extra": {
+      "eas": {
+        "projectId": "53a2c2d4-40e2-4a9d-9587-57b586bb612a"
+      }
     }
   }
 }
