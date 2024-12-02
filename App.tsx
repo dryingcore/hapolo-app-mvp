@@ -5,7 +5,7 @@ import LoginScreen from './components/LoginScreen'; // Certifique-se de importar
 import Dashboard from './components/Dashboard'; // Crie um componente para a Dashboard
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para controlar o login
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Estado para controlar o login
 
   // Função chamada quando o login for bem-sucedido
   const handleLoginSuccess = () => {
@@ -26,6 +26,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
     display: 'flex',
     height: '100%',
     width: '100%',

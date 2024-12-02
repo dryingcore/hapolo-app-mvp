@@ -4,7 +4,7 @@ import axios from 'axios'; // Importando axios
 
 // Definindo o tipo para os dados que vamos receber da API
 interface VehicleData {
-  placa: string;
+  placa?: string;
   comunicacao?: {
     dateGPS: string;
     dateGSM: string;
@@ -48,37 +48,44 @@ export default function ContentCard() {
 
   return (
     <ScrollView style={styles.container}>
-      {vehicles.length > 0 ? (
-        vehicles.map((vehicle, index) => (
-          <View key={index} style={styles.card}>
-            <Text style={styles.title}>Placa: {vehicle.placa}</Text>
-            {vehicle.comunicacao ? (
-              <>
-                <Text>Data GPS: {vehicle.comunicacao.dateGPS}</Text>
-                <Text>Latitude: {vehicle.comunicacao.latitudeDecimalDegrees}</Text>
-                <Text>Longitude: {vehicle.comunicacao.longitudeDecimalDegrees}</Text>
-                <Text>
-                  Endereço: {vehicle.comunicacao.endereco.road}, {vehicle.comunicacao.endereco.city} -{' '}
-                  {vehicle.comunicacao.endereco.state}
-                </Text>
-                <Text>Velocidade: {vehicle.comunicacao.speed} km/h</Text>
-                <Text>Bateria: {vehicle.comunicacao.bateria}%</Text>
-                <Text>Ignição: {vehicle.comunicacao.ignicao === '0' ? 'Desligada' : 'Ligada'}</Text>
+      <Text style={styles.title}>Veículos ({vehicles.length})</Text>
 
-                {/* Usando o Linking para abrir o Google Maps no navegador */}
-                <Button
-                  title="Ver no Google Maps"
-                  onPress={() => Linking.openURL(vehicle.comunicacao.endereco.google_maps)}
-                />
-              </>
-            ) : (
-              <Text>Dados de comunicação não disponíveis</Text>
-            )}
-          </View>
-        ))
-      ) : (
-        <Text>Carregando...</Text>
-      )}
+      {vehicles.map((vehicle, index) => (
+        <View key={index} style={styles.card}>
+          {/* Aqui estamos pegando a placa de forma segura */}
+          <Text style={styles.cardTitle}>Placa: {vehicle.comunicacao?.placa || 'Placa não disponível'}</Text>
+
+          {/* Dados de comunicação */}
+          {vehicle.comunicacao && (
+            <View>
+              <Text>Data GPS: {vehicle.comunicacao.dateGPS || 'N/A'}</Text>
+              <Text>Data GSM: {vehicle.comunicacao.dateGSM || 'N/A'}</Text>
+              <Text>Ignicao: {vehicle.comunicacao.ignicao === '1' ? 'Ligado' : 'Desligado'}</Text>
+              <Text>Bateria: {vehicle.comunicacao.bateria}%</Text>
+              <Text>Speed: {vehicle.comunicacao.speed} km/h</Text>
+            </View>
+          )}
+
+          {/* Dados de localização */}
+          {vehicle.comunicacao?.endereco && (
+            <View style={styles.location}>
+              <Text>
+                {vehicle.comunicacao.endereco.road}, {vehicle.comunicacao.endereco.suburb}
+              </Text>
+              <Text>
+                {vehicle.comunicacao.endereco.city}, {vehicle.comunicacao.endereco.state}
+              </Text>
+              <Text>{vehicle.comunicacao.endereco.country}</Text>
+
+              {/* Link para o Google Maps */}
+              <Button
+                title="Ver no Google Maps"
+                onPress={() => Linking.openURL(vehicle.comunicacao.endereco.google_maps)}
+              />
+            </View>
+          )}
+        </View>
+      ))}
     </ScrollView>
   );
 }
@@ -87,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#333',
   },
   card: {
     padding: 15,
@@ -101,5 +108,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#fff',
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  location: {
+    marginTop: 10,
   },
 });

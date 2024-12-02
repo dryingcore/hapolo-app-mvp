@@ -12,7 +12,7 @@ export function LoginScreen(props: LoginScreenProps) {
   const [senha, setSenha] = useState('');
 
   const handleLogin = () => {
-    if (cpf.trim().length > 0 && senha.trim().length > 0) {
+    if (cpf.trim().length >= 0 && senha.trim().length >= 0) {
       // Chama a função de sucesso do login, passando para o App
       props.onLoginSuccess();
     } else {
